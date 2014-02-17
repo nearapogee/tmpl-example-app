@@ -1,0 +1,22 @@
+<div class="tmpl">
+  <div class="field">
+    <%= chapter_fields.label :title %><br>
+    <%= chapter_fields.text_field :title %>
+  </div>
+  <%= chapter_fields.hidden_field :_destroy %>
+
+  <div class="tmpl-container-heading-<%= index %>">
+    <%= chapter_fields.fields_for :headings do |heading_fields| %>
+      <%= render 'heading', heading_fields: heading_fields %>
+    <% end %>
+  </div>
+
+  <% tmpl_build :heading, key: 'headings_attributes' do %>
+    <%= chapter_fields.fields_for :headings, Heading.new do |heading_fields| %>
+      <%= render 'heading', heading_fields: heading_fields %>
+    <% end %>
+  <% end %>
+
+  <%= tmpl_add_link 'Add Heading', :heading, container: ".tmpl-container-heading-#{index}" %>
+  <%= tmpl_remove_link 'Remove Chapter' %>
+</div>
